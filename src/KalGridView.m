@@ -207,8 +207,14 @@ static NSString *kSlideAnimationId = @"KalSwitchMonths";
                  || (direction == SLIDE_DOWN && [logic.daysInFirstWeekOfFollowingMonth count] > 0);
   
   [self swapMonthsAndSlide:direction keepOneRow:keepOneRow];
-  
-  self.selectedTile = [frontMonthView firstTileOfMonth];
+
+  // Select today if the calendar is this month.
+  KalTileView *todayTile = [frontMonthView tileForToday];
+  if (todayTile) {
+    self.selectedTile = todayTile;
+  } else {
+    self.selectedTile = [frontMonthView firstTileOfMonth];
+  }
 }
 
 - (void)slideUp { [self slide:SLIDE_UP]; }
