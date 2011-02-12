@@ -45,4 +45,6 @@
 - (void)slideDown;
 - (void)jumpToSelectedMonth;    // see comment on KalView
 
+- (void)selectDatesWithAppending:(unsigned int)numOfDays;
+
 @end

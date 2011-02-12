@@ -247,6 +247,21 @@ static NSString *kSlideAnimationId = @"KalSwitchMonths";
   self.selectedTile = [frontMonthView tileForDate:date];
 }
 
+- (void)selectDatesWithAppending:(unsigned int)numOfDays {
+  KalDate *from = selectedDate;
+  KalDate *to = [KalDate dateFromNSDate:[[selectedDate NSDate] addTimeInterval:60*60*24*(numOfDays)]];
+  for (KalTileView *tile in frontMonthView.subviews) {
+    if ([from compare:tile.date] == NSOrderedAscending
+               && [tile.date compare:to] == NSOrderedAscending) {
+      tile.appended = YES;
+    } else if ([from compare:tile.date] != NSOrderedSame && [to compare:tile.date] == NSOrderedSame) {
+      tile.appended = YES;
+    } else {
+      tile.appended = NO;
+    }
+  }
+}
+
 - (void)swapMonthViews
 {
   KalMonthView *tmp = backMonthView;

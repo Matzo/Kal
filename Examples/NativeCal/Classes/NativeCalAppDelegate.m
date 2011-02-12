@@ -25,6 +25,8 @@
    */
   kal = [[KalViewController alloc] init];
   kal.title = @"NativeCal";
+  kal.selectTileAfterCalendarSlid = NO;
+  kal.numberOfAppending = 1;
 
   /*
    *    Kal Configuration
@@ -34,6 +36,7 @@
   kal.delegate = self;
   dataSource = [[EventKitDataSource alloc] init];
   kal.dataSource = dataSource;
+  [kal reloadData];
   
   // Setup the navigation stack and display it.
   navController = [[UINavigationController alloc] initWithRootViewController:kal];
