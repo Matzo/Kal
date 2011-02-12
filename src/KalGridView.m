@@ -30,6 +30,7 @@ static NSString *kSlideAnimationId = @"KalSwitchMonths";
 @implementation KalGridView
 
 @synthesize selectedTile, highlightedTile, transitioning;
+@synthesize selectedDate, selectTileAfterCalendarSlid;
 
 - (id)initWithFrame:(CGRect)frame logic:(KalLogic *)theLogic delegate:(id<KalViewDelegate>)theDelegate
 {
@@ -56,6 +57,8 @@ static NSString *kSlideAnimationId = @"KalSwitchMonths";
     [self addSubview:frontMonthView];
 
     [self jumpToSelectedMonth];
+    
+    selectTileAfterCalendarSlid = YES;
   }
   return self;
 }
@@ -94,6 +97,7 @@ static NSString *kSlideAnimationId = @"KalSwitchMonths";
     selectedTile.selected = NO;
     selectedTile = [tile retain];
     tile.selected = YES;
+    self.selectedDate = tile.date;
     [delegate didSelectDate:tile.date];
   }
 }
@@ -208,12 +212,22 @@ static NSString *kSlideAnimationId = @"KalSwitchMonths";
   
   [self swapMonthsAndSlide:direction keepOneRow:keepOneRow];
 
-  // Select today if the calendar is this month.
-  KalTileView *todayTile = [frontMonthView tileForToday];
-  if (todayTile) {
-    self.selectedTile = todayTile;
+  
+  if (selectTileAfterCalendarSlid) {
+    // Select today if the calendar is this month.
+    KalTileView *todayTile = [frontMonthView tileForToday];
+    if (todayTile) {
+      self.selectedTile = todayTile;
+    } else {
+      self.selectedTile = [frontMonthView firstTileOfMonth];
+    }
   } else {
-    self.selectedTile = [frontMonthView firstTileOfMonth];
+    // Remember selected date when the calendar was slid.
+    if ([selectedDate compare:self.selectedTile.date] == NSOrderedSame) {
+      self.selectedTile.selected = YES;
+    } else {
+      self.selectedTile.selected = NO;
+    }
   }
 }
 
@@ -248,13 +262,15 @@ static NSString *kSlideAnimationId = @"KalSwitchMonths";
 
 - (void)markTilesForDates:(NSArray *)dates { [frontMonthView markTilesForDates:dates]; }
 
-- (KalDate *)selectedDate { return selectedTile.date; }
+//- (KalDate *)selectedDate { return selectedTile.date; }
+//- (KalDate *)selectedDate { return selectedDate; }
 
 #pragma mark -
 
 - (void)dealloc
 {
   [selectedTile release];
+  [selectedDate release];
   [highlightedTile release];
   [frontMonthView release];
   [backMonthView release];

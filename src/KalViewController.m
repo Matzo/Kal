@@ -39,6 +39,7 @@ NSString *const KalDataSourceChangedNotification = @"KalDataSourceChangedNotific
 @implementation KalViewController
 
 @synthesize dataSource, delegate, initialDate, selectedDate;
+@synthesize selectTileAfterCalendarSlid;
 
 - (id)initWithSelectedDate:(NSDate *)date
 {
@@ -90,6 +91,10 @@ NSString *const KalDataSourceChangedNotification = @"KalDataSourceChangedNotific
 {
   [[self calendarView] jumpToSelectedMonth];
   [self reloadData];
+}
+
+- (void)setSelectTileAfterCalendarSlid:(BOOL)doSelect {
+  [[self calendarView].gridView setSelectTileAfterCalendarSlid:doSelect];
 }
 
 // -----------------------------------------

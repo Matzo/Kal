@@ -26,11 +26,14 @@
   KalMonthView *backMonthView;
   KalTileView *selectedTile;
   KalTileView *highlightedTile;
+  KalDate *selectedDate;
   BOOL transitioning;
+  BOOL selectTileAfterCalendarSlid;
 }
 
 @property (nonatomic, readonly) BOOL transitioning;
-@property (nonatomic, readonly) KalDate *selectedDate;
+@property (nonatomic, assign) BOOL selectTileAfterCalendarSlid;
+@property (nonatomic, retain) KalDate *selectedDate;
 
 - (id)initWithFrame:(CGRect)frame logic:(KalLogic *)logic delegate:(id<KalViewDelegate>)delegate;
 - (void)selectDate:(KalDate *)date;
