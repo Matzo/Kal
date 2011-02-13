@@ -100,8 +100,8 @@ NSString *const KalDataSourceChangedNotification = @"KalDataSourceChangedNotific
 }
 
 - (void)setNumberOfAppending:(unsigned int)numOfDays {
-  numberOfAppending = numOfDays;
-  if (0 < numberOfAppending) {
+  if (numberOfAppending != numOfDays) {
+    numberOfAppending = numOfDays;
     [[self calendarView].gridView selectDatesWithAppending:numberOfAppending];
   }
 }

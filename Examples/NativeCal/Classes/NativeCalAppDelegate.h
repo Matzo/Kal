@@ -22,6 +22,8 @@
   UINavigationController *navController;
   KalViewController *kal;
   id dataSource;
+  
+  UILabel *nights;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
