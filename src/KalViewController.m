@@ -103,6 +103,7 @@ NSString *const KalDataSourceChangedNotification = @"KalDataSourceChangedNotific
   if (numberOfAppending != numOfDays) {
     numberOfAppending = numOfDays;
     [[self calendarView].gridView selectDatesWithAppending:numberOfAppending];
+    [self didSelectDate:self.calendarView.selectedDate];
   }
 }
 
@@ -123,7 +124,7 @@ NSString *const KalDataSourceChangedNotification = @"KalDataSourceChangedNotific
   [[self calendarView].gridView selectDatesWithAppending:numberOfAppending];
   
   NSDate *from = [[date NSDate] cc_dateByMovingToBeginningOfDay];
-  NSDate *to = [[date NSDate] cc_dateByMovingToEndOfDay];
+  NSDate *to = [[self endOfDate] cc_dateByMovingToEndOfDay];
   [self clearTable];
   [dataSource loadItemsFromDate:from toDate:to];
   [tableView reloadData];
@@ -227,7 +228,7 @@ NSString *const KalDataSourceChangedNotification = @"KalDataSourceChangedNotific
 - (void)viewWillAppear:(BOOL)animated
 {
   [super viewWillAppear:animated];
-  [tableView reloadData];
+  [tableView deselectRowAtIndexPath:[tableView indexPathForSelectedRow] animated:YES];
 }
 
 - (void)viewDidAppear:(BOOL)animated

@@ -52,14 +52,15 @@ static BOOL IsDateBetweenInclusive(NSDate *date, NSDate *begin, NSDate *end)
   static NSString *identifier = @"MyCell";
   UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
   if (!cell) {
-    cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier] autorelease];
-    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
+    cell = [[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue2 reuseIdentifier:identifier] autorelease];
+    cell.accessoryType = UITableViewCellAccessoryNone;
+    cell.selectionStyle = UITableViewCellSelectionStyleBlue;
     cell.imageView.contentMode = UIViewContentModeScaleAspectFill;
   }
 
   EKEvent *event = [self eventAtIndexPath:indexPath];
-  cell.textLabel.text = event.title;
+  cell.textLabel.text = [event.startDate descriptionWithLocale:[NSLocale currentLocale]];
+  cell.detailTextLabel.text = event.title;
   return cell;
 }
 
@@ -73,7 +74,6 @@ static BOOL IsDateBetweenInclusive(NSDate *date, NSDate *begin, NSDate *end)
 - (void)presentingDatesFrom:(NSDate *)fromDate to:(NSDate *)toDate delegate:(id<KalDataSourceCallbacks>)delegate
 {
   // asynchronous callback on the main thread
-  [events removeAllObjects];
   NSLog(@"Fetching events from EventKit between %@ and %@ on a GCD-managed background thread...", fromDate, toDate);
   dispatch_async(eventStoreQueue, ^{
     NSDate *fetchProfilerStart = [NSDate date];
@@ -81,6 +81,7 @@ static BOOL IsDateBetweenInclusive(NSDate *date, NSDate *begin, NSDate *end)
     NSArray *matchedEvents = [eventStore eventsMatchingPredicate:predicate];
     dispatch_async(dispatch_get_main_queue(), ^{
       NSLog(@"Fetched %d events in %f seconds", [matchedEvents count], -1.f * [fetchProfilerStart timeIntervalSinceNow]);
+      [events removeAllObjects];
       [events addObjectsFromArray:matchedEvents];
       [delegate loadedDataSource:self];
     });

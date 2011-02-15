@@ -41,24 +41,24 @@
   [window addSubview:navController.view];
   [window makeKeyAndVisible];
   
-//  /**
-//   *    Append
-//   */
-//  kal.selectTileAfterCalendarSlid = NO;
-//  kal.numberOfAppending = 1;
-//  
-//  UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.0, [UIScreen mainScreen].bounds.size.height-40, [UIScreen mainScreen].bounds.size.width, 40)];
-//  UIBarButtonItem *sp  = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease];
-//  UIBarButtonItem *plus  = [[[UIBarButtonItem alloc] initWithTitle:@" + " style:UIBarButtonItemStyleBordered target:self action:@selector(addDate)] autorelease];
-//  UIBarButtonItem *minus = [[[UIBarButtonItem alloc] initWithTitle:@" - " style:UIBarButtonItemStyleBordered target:self action:@selector(minusDate)] autorelease];
-//  [toolbar setItems:[NSArray arrayWithObjects:sp,minus,plus,nil]];
-//  nights = [[UILabel alloc] init];
-//  nights.text = [NSString stringWithFormat:@"%d nights", kal.numberOfAppending];
-//  nights.center = CGPointMake(toolbar.center.x, toolbar.bounds.size.height/4);
-//  nights.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.0];
-//  [nights sizeToFit];
-//  [toolbar addSubview:nights];
-//  [window addSubview:toolbar];
+  /**
+   *    Append
+   */
+  kal.selectTileAfterCalendarSlid = NO;
+  kal.numberOfAppending = 1;
+  
+  UIToolbar *toolbar = [[UIToolbar alloc] initWithFrame:CGRectMake(0.0, [UIScreen mainScreen].bounds.size.height-40, [UIScreen mainScreen].bounds.size.width, 40)];
+  UIBarButtonItem *sp  = [[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace target:nil action:nil] autorelease];
+  UIBarButtonItem *plus  = [[[UIBarButtonItem alloc] initWithTitle:@" + " style:UIBarButtonItemStyleBordered target:self action:@selector(addDate)] autorelease];
+  UIBarButtonItem *minus = [[[UIBarButtonItem alloc] initWithTitle:@" - " style:UIBarButtonItemStyleBordered target:self action:@selector(minusDate)] autorelease];
+  [toolbar setItems:[NSArray arrayWithObjects:sp,minus,plus,nil]];
+  nights = [[UILabel alloc] init];
+  nights.text = [NSString stringWithFormat:@"%d nights", kal.numberOfAppending];
+  nights.center = CGPointMake(toolbar.center.x, toolbar.bounds.size.height/4);
+  nights.backgroundColor = [UIColor colorWithWhite:1.0 alpha:0.0];
+  [nights sizeToFit];
+  [toolbar addSubview:nights];
+  [window addSubview:toolbar];
 }
 
 // Action handler for the navigation bar's right bar button item.
